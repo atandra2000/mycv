@@ -1,68 +1,574 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Atandra's Personal Site</title>
-  <link rel="stylesheet" href=".\styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Atandra Bharati — Machine Learning Engineer. Building LLMs, diffusion models, and generative AI from scratch." />
+  <title>Atandra Bharati — ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <table cellspacing="25">
-    <tr>
-      <td><img src="https://hosting.photobucket.com/images/i/atandra_bharati/169189306_269067258221566_7963945381040884612_n.jpg?width=450&height=278&crop=fill" alt="Atandra's profile picture"></td>
-      <td>
-        <h1>Atandra Bharati</h1>
-        <p><em>Budding <strong>Web Developer</strong></em></p>
-        <br />
-        <p>
-        <h4>I am a student of 1st year studying <em>Civil Engineering</em>.But as a pasion I am learning web development from <a href="https://www.udemy.com/">Udemy</a>.</h4>
-      </td>
-    </tr>
-  </table>
-  </<p>
-  <hr>
-  <h2>My Education</h2>
-  <ul>
-    <li>Secondary in VSN</li>
-    <li>Higher Secondary in CPS</li>
-    <li>Presently pursuing <strong>b.tech</strong> in <em>Civil Engineering</em> from <a href="https://www.heritageit.edu/">HITK</a></li>
-  </ul>
-  <hr>
-  <a href=".\hobbies.html">My Hobbies</a>
-  <br />
-  <a href=".\contact_info.html">My Contact details</a>
-  <br>
-  <h2>Personal Skill Rating</h2>
-  <table cellspacing="15">
-    <tr>
-      <td>
-        <table>
-          <tr>
-            <td>Yoga</td>
-            <td>⭐⭐</td>
-          <tr>
-            <td>Hiking</td>
-            <td>⭐</td>
-          </tr>
-    </tr>
-  </table>
-  </td>
-  <td>
-    <table>
-      <tr>
-        <td>Mathematics</td>
-        <td>⭐⭐⭐</td>
-      </tr>
-      <tr>
-        <td>programming</td>
-        <td>⭐⭐⭐⭐</td>
-      </tr>
-    </table>
-  </td>
-  </tr>
-  </table>
-  <hr>
-</body>
 
+  <!-- ═══════════════════════════ NAVBAR ════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <span class="nav-logo">Atandra Bharati</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li>
+          <a href="https://github.com/atandra2000" target="_blank" class="nav-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="container hero-inner">
+
+      <div class="hero-avatar">
+        <span>AB</span>
+      </div>
+
+      <div class="hero-text">
+        <p class="hero-greeting">Hi, I'm</p>
+        <h1 class="hero-name">Atandra Bharati</h1>
+        <p class="hero-title">
+          <span class="type-cursor">Machine Learning Engineer</span>
+        </p>
+        <p class="hero-tagline">
+          Building LLMs, diffusion models &amp; generative AI systems from scratch —
+          end-to-end, from architecture design to multi-GPU training.
+        </p>
+
+        <div class="hero-meta">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            Kolkata, India
+          </span>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            atandrabharati@gmail.com
+          </span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="https://github.com/atandra2000" target="_blank" class="btn btn-ghost">
+            GitHub Profile
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ ABOUT ════════════════════════════ -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a Machine Learning Engineer with a deep focus on building AI systems from the ground up.
+            While pursuing a B.Tech in Civil Engineering at Heritage Institute of Technology Kolkata (2020–2024),
+            I independently transitioned into ML through rigorous self-directed study and project-based learning —
+            going far beyond coursework to implement production-grade architectures.
+          </p>
+          <p>
+            My work spans the full spectrum of modern deep learning: transformer-based LLMs with MoE routing
+            and FP8 Triton kernels, latent diffusion models with custom DDPM/DDIM schedulers, vision-language
+            models, and generative adversarial networks. I have hands-on experience with multi-GPU distributed
+            training (FSDP, DDP) on cloud hardware.
+          </p>
+          <p>
+            I thrive on understanding systems at the lowest level — reading papers, then building clean,
+            documented implementations from scratch. Every project in my portfolio was written without relying
+            on high-level framework abstractions.
+          </p>
+        </div>
+        <div class="about-stats">
+          <div class="stat-card">
+            <span class="stat-num">8+</span>
+            <span class="stat-label">ML Projects</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">27L</span>
+            <span class="stat-label">Param LLM Built</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">~860M</span>
+            <span class="stat-label">Param Diffusion UNet</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">8× GPU</span>
+            <span class="stat-label">Training Infra</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+  <section class="section section-alt" id="skills">
+    <div class="container">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-blue"></span>Languages
+          </h3>
+          <div class="tags">
+            <span class="tag tag-blue">Python</span>
+            <span class="tag tag-blue">CUDA C++</span>
+            <span class="tag tag-blue">Triton</span>
+            <span class="tag tag-blue">Bash</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-orange"></span>Frameworks & Libraries
+          </h3>
+          <div class="tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-orange">HuggingFace Transformers</span>
+            <span class="tag tag-orange">HuggingFace Datasets</span>
+            <span class="tag tag-orange">Safetensors</span>
+            <span class="tag tag-orange">Diffusers</span>
+            <span class="tag tag-orange">PIL / Pillow</span>
+            <span class="tag tag-orange">NumPy</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-purple"></span>ML Architectures
+          </h3>
+          <div class="tags">
+            <span class="tag tag-purple">Transformers (GPT-style)</span>
+            <span class="tag tag-purple">Diffusion Models (DDPM/DDIM)</span>
+            <span class="tag tag-purple">GANs (DCGAN, CycleGAN)</span>
+            <span class="tag tag-purple">VAEs (β-VAE)</span>
+            <span class="tag tag-purple">Vision-Language Models</span>
+            <span class="tag tag-purple">Mixture-of-Experts (MoE)</span>
+            <span class="tag tag-purple">Multi-Head Latent Attention</span>
+            <span class="tag tag-purple">RoPE / YaRN</span>
+            <span class="tag tag-purple">GQA / MLA</span>
+            <span class="tag tag-purple">SwiGLU / GeGLU</span>
+            <span class="tag tag-purple">Multi-Token Prediction</span>
+            <span class="tag tag-purple">FP8 Quantization</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-green"></span>Training & Infrastructure
+          </h3>
+          <div class="tags">
+            <span class="tag tag-green">FSDP</span>
+            <span class="tag tag-green">DDP / DataParallel</span>
+            <span class="tag tag-green">Multi-GPU (8× RTX 5090)</span>
+            <span class="tag tag-green">RunPod</span>
+            <span class="tag tag-green">bfloat16 / FP8 AMP</span>
+            <span class="tag tag-green">torch.compile</span>
+            <span class="tag tag-green">NCCL</span>
+            <span class="tag tag-green">Gradient Checkpointing</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-yellow"></span>Tools & Experiment Tracking
+          </h3>
+          <div class="tags">
+            <span class="tag tag-yellow">Weights &amp; Biases</span>
+            <span class="tag tag-yellow">Comet ML</span>
+            <span class="tag tag-yellow">Git / GitHub</span>
+            <span class="tag tag-yellow">GitHub Actions</span>
+            <span class="tag tag-yellow">img2dataset</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group-title">
+            <span class="skill-dot dot-teal"></span>Post-Training Techniques
+          </h3>
+          <div class="tags">
+            <span class="tag tag-teal">SFT (Supervised Fine-Tuning)</span>
+            <span class="tag tag-teal">GRPO (RL)</span>
+            <span class="tag tag-teal">R1-Style Distillation</span>
+            <span class="tag tag-teal">KL Divergence Penalty</span>
+            <span class="tag tag-teal">Speculative Decoding</span>
+            <span class="tag tag-teal">EMA</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROJECTS ═════════════════════════ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">All architectures designed and implemented from scratch — no high-level wrappers.</p>
+
+      <div class="projects-grid">
+
+        <!-- ── DeepSeek-V3-Lite ── -->
+        <article class="project-card card-featured">
+          <div class="card-header">
+            <div class="card-icon">🧠</div>
+            <span class="card-badge">Featured</span>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/DeepSeek-V3-Lite" target="_blank">DeepSeek-V3-Lite</a>
+          </h3>
+          <p class="card-desc">
+            Full reimplementation of the DeepSeek-V3 architecture from scratch — a 27-layer transformer
+            with 1 dense block and 26 Mixture-of-Experts blocks (2B effective parameters, 64 routed + 2 shared experts,
+            top-6 activated). Implements Multi-Head Latent Attention with KV-cache compression (10–20×),
+            custom FP8 Triton kernels, Multi-Token Prediction, and a complete post-training pipeline.
+          </p>
+          <ul class="card-highlights">
+            <li>MLA with decoupled RoPE (YaRN), absorption trick, KV cache compression 10–20×</li>
+            <li>FP8 E4M3FN training — custom Triton kernels for block-wise quant, GEMM, dequant</li>
+            <li>Full post-training: SFT, GRPO (group_size=8), R1 distillation, speculative decoding</li>
+            <li>FSDP distributed training across 8× RTX 5090 GPUs with safetensors checkpointing</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">Transformers</span>
+            <span class="tag tag-purple">MoE</span>
+            <span class="tag tag-purple">MLA</span>
+            <span class="tag tag-blue">Triton</span>
+            <span class="tag tag-purple">FP8</span>
+            <span class="tag tag-teal">GRPO</span>
+            <span class="tag tag-green">FSDP</span>
+          </div>
+          <a href="https://github.com/atandra2000/DeepSeek-V3-Lite" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── StableDiffusion ── -->
+        <article class="project-card card-featured">
+          <div class="card-header">
+            <div class="card-icon">🎨</div>
+            <span class="card-badge">Featured</span>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/StableDiffusion" target="_blank">Stable Diffusion</a>
+          </h3>
+          <p class="card-desc">
+            Stable Diffusion built entirely from scratch — custom UNet (~860M parameters), DDPM and DDIM
+            schedulers, frozen VAE (stabilityai/sd-vae-ft-mse) and CLIP text encoder, trained on the
+            LAION-2B-en-aesthetic dataset with a full 5-stage data pipeline. Pre-encodes latents into RAM
+            (~42 GB) for fast training.
+          </p>
+          <ul class="card-highlights">
+            <li>Custom UNet with cross-attention, spatial transformers, ch_mults=(1,2,4,4), 8 attention heads</li>
+            <li>DDPM (scaled_linear, β=0.00085–0.012, T=1000) + DDIM (25–50 steps, CFG=7.5)</li>
+            <li>Dual-GPU VAE encoding with process isolation (CUDA_VISIBLE_DEVICES per worker)</li>
+            <li>bfloat16 + torch.compile, fused AdamW, EMA (decay=0.9999), DataParallel (2× RTX PRO 4500)</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">Diffusion</span>
+            <span class="tag tag-purple">UNet</span>
+            <span class="tag tag-purple">DDPM/DDIM</span>
+            <span class="tag tag-green">Multi-GPU</span>
+            <span class="tag tag-yellow">W&amp;B</span>
+          </div>
+          <a href="https://github.com/atandra2000/StableDiffusion" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── VisionLanguageModel ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">👁️</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/VisionLanguageModel" target="_blank">Vision Language Model</a>
+          </h3>
+          <p class="card-desc">
+            PaliGemma-inspired VLM built from scratch — SigLIP vision encoder, GQA-based language decoder
+            with RoPE positional encodings and GeGLU activations, connected via a trainable linear projector.
+            Trained on COCO 2014 captioning on a P100 GPU.
+          </p>
+          <ul class="card-highlights">
+            <li>SigLIP vision encoder with patch embedding and learned positional encodings</li>
+            <li>GQA language decoder with GeGLU FFN and RoPE, fully from scratch</li>
+            <li>Linear projector bridging vision and language spaces</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">VLM</span>
+            <span class="tag tag-purple">GQA</span>
+            <span class="tag tag-purple">RoPE</span>
+            <span class="tag tag-purple">SigLIP</span>
+          </div>
+          <a href="https://github.com/atandra2000/VisionLanguageModel" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── FaceAgingCycleGAN ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">🔄</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/FaceAgingCycleGAN" target="_blank">Face Aging CycleGAN</a>
+          </h3>
+          <p class="card-desc">
+            Bidirectional face age transformation (young ↔ old) using a conditional CycleGAN with AdaIN
+            style normalization, multi-scale discriminator, and VGG perceptual loss. Trained on RTX 6000 Ada
+            with Weights &amp; Biases experiment tracking.
+          </p>
+          <ul class="card-highlights">
+            <li>AdaIN (Adaptive Instance Normalization) for age-conditioned style transfer</li>
+            <li>Multi-scale discriminator for improved texture fidelity</li>
+            <li>VGG perceptual loss + cycle-consistency + identity loss</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">CycleGAN</span>
+            <span class="tag tag-purple">AdaIN</span>
+            <span class="tag tag-yellow">W&amp;B</span>
+          </div>
+          <a href="https://github.com/atandra2000/FaceAgingCycleGAN" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── GPT-From-Scratch ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">💬</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/GPT-From-Scratch" target="_blank">GPT From Scratch</a>
+          </h3>
+          <p class="card-desc">
+            Decoder-only Transformer language model built entirely from scratch with PyTorch.
+            Implements multi-head self-attention, causal masking, layer normalization, and
+            positional embeddings. Trained on Tiny Shakespeare as a character-level LM.
+          </p>
+          <ul class="card-highlights">
+            <li>Full decoder-only transformer with causal multi-head attention from scratch</li>
+            <li>Character-level tokenization on Tiny Shakespeare</li>
+            <li>Foundational study of the GPT architecture and training dynamics</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">Transformer</span>
+            <span class="tag tag-purple">LLM</span>
+            <span class="tag tag-blue">Python</span>
+          </div>
+          <a href="https://github.com/atandra2000/GPT-From-Scratch" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── TranslationLM ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">🌍</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/TranslationLM" target="_blank">Neural Machine Translation</a>
+          </h3>
+          <p class="card-desc">
+            Full encoder-decoder Transformer for English → Italian neural machine translation.
+            BPE tokenizer trained from scratch on the opus_books corpus. Training loss reduced
+            from 6.17 → 2.28 over 20 epochs on a P100 GPU.
+          </p>
+          <ul class="card-highlights">
+            <li>Complete encoder-decoder transformer with cross-attention, from scratch</li>
+            <li>Custom BPE tokenizer trained on opus_books corpus</li>
+            <li>Loss: 6.17 → 2.28 over 20 epochs (P100 GPU)</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">Seq2Seq</span>
+            <span class="tag tag-purple">BPE</span>
+            <span class="tag tag-purple">NMT</span>
+          </div>
+          <a href="https://github.com/atandra2000/TranslationLM" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── FaceGenerationVAE ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">🎭</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/FaceGenerationVAE" target="_blank">Face Generation VAE</a>
+          </h3>
+          <p class="card-desc">
+            β-VAE for 128×128 face generation on the CelebA dataset. Uses bilinear upsampling in the
+            decoder, KL annealing schedule, and a 512-dimensional latent space. Tracked with Comet ML.
+          </p>
+          <ul class="card-highlights">
+            <li>β-VAE with 512-dim latent space and KL annealing for stable training</li>
+            <li>Bilinear upsampling decoder for sharp 128×128 reconstructions</li>
+            <li>Comet ML experiment tracking with reconstruction + latent visualizations</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">VAE</span>
+            <span class="tag tag-purple">Generative AI</span>
+            <span class="tag tag-yellow">Comet ML</span>
+          </div>
+          <a href="https://github.com/atandra2000/FaceGenerationVAE" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+        <!-- ── DCGAN ── -->
+        <article class="project-card">
+          <div class="card-header">
+            <div class="card-icon">🤖</div>
+          </div>
+          <h3 class="card-title">
+            <a href="https://github.com/atandra2000/DCGAN-Face-Generation" target="_blank">DCGAN Face Generation</a>
+          </h3>
+          <p class="card-desc">
+            Deep Convolutional GAN trained on CelebA to generate 64×64 face images from scratch
+            using PyTorch. Implements the standard DCGAN architecture with spectral normalization
+            and Comet ML experiment tracking.
+          </p>
+          <ul class="card-highlights">
+            <li>DCGAN with transposed convolution generator and strided conv discriminator</li>
+            <li>Trained on CelebA (200K+ images) for 64×64 face synthesis</li>
+            <li>Comet ML tracking with generated sample grids at each epoch</li>
+          </ul>
+          <div class="card-tags">
+            <span class="tag tag-orange">PyTorch</span>
+            <span class="tag tag-purple">GAN</span>
+            <span class="tag tag-purple">Generative AI</span>
+            <span class="tag tag-yellow">Comet ML</span>
+          </div>
+          <a href="https://github.com/atandra2000/DCGAN-Face-Generation" target="_blank" class="card-link">
+            View on GitHub →
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ EDUCATION ════════════════════════ -->
+  <section class="section section-alt" id="education">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-body">
+          <h3 class="edu-degree">Bachelor of Technology (B.Tech) — Civil Engineering</h3>
+          <p class="edu-school">
+            <a href="https://www.heritageit.edu/" target="_blank">Heritage Institute of Technology, Kolkata</a>
+          </p>
+          <p class="edu-period">2020 – 2024</p>
+          <p class="edu-note">
+            Alongside formal coursework, I independently pursued machine learning through rigorous
+            self-study — reading seminal papers (Attention Is All You Need, DDPM, MoE, DeepSeek-V3)
+            and implementing full architectures from scratch. This project-driven approach reflects my
+            commitment to deep technical understanding rather than surface-level API usage.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="footer-name">Atandra Bharati</p>
+      <p class="footer-tagline">Machine Learning Engineer · Kolkata, India</p>
+      <div class="footer-links">
+        <a href="https://github.com/atandra2000" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+        <a href="mailto:atandrabharati@gmail.com">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Email
+        </a>
+      </div>
+      <p class="footer-copy">© 2024 Atandra Bharati · Open to ML Engineer roles</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active');
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+      });
+    });
+
+    // Scroll-reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card, .skill-group, .stat-card, .edu-card')
+      .forEach(el => observer.observe(el));
+  </script>
+
+</body>
 </html>
