@@ -19,12 +19,18 @@ Responsive · Dark navbar on scroll · Scroll-reveal animations · Mobile-friend
 
 ## Local Development
 
+```bash
+# Just open the file
+open index.html
 
+# Or serve locally
+python -m http.server 8000
+```
 
 ## Deploy
 
-Hosted via **GitHub Pages** from the  branch root.
-Any push to  automatically updates the live site.
+Hosted via **GitHub Pages** from the `main` branch root.
+Any push to `main` automatically updates the live site.
 
 ---
 
