@@ -1,21 +1,31 @@
-# Atandra Bharati — ML Engineer Portfolio
+# Atandra Bharati — Portfolio
 
-> Personal resume and project portfolio site — live at **[atandra2000.github.io/mycv](https://atandra2000.github.io/mycv)**
+> Personal portfolio site — live at **[atandra2000.github.io/mycv](https://atandra2000.github.io/mycv)**
 
-A clean, responsive, single-page portfolio showcasing ML engineering work across LLMs, diffusion models, GANs, and vision-language systems — all built from scratch.
+A modern, responsive, single-page portfolio for a deep learning research engineer. Showcases twelve
+from-scratch ML projects across LLMs, latent diffusion, multimodal AI, and agentic research systems.
 
 ## Highlights
 
-- **DeepSeek-V3-Lite** — Faithful from-scratch reimplementation of DeepSeek-V3 (MLA, MoE with 20 routed + 2 shared experts, Multi-Token Prediction) scaled for a single A100 80GB; training pipeline complete, pre-training run not yet started.
-- **Stable Diffusion** — Custom UNet (~860M params), DDPM/DDIM schedulers, LAION data pipeline, DDP training on 2× RTX 5090; checkpoint released at epoch 42.
-- **Vision Language Model** — PaliGemma-inspired VLM: SigLIP-style vision encoder, GQA + RoPE decoder, linear projector, trained end-to-end from scratch on COCO captions.
-- **Face Aging CycleGAN** — AdaIN-conditioned CycleGAN, multi-scale discriminator, VGG perceptual loss; architecture and training pipeline complete.
-- **GPT / TranslationLM / VAE / DCGAN / ActionRecognition** — Foundational architectures implemented end-to-end.
+- **Autonomous ML Research Engineer** — 15-phase multi-agent platform; paper → plan → patch → train → evaluate → iterate → report
+- **DeepSeek-v3-Lite** (422M) — Faithful from-scratch DeepSeek-V3 with MLA, aux-loss-free MoE, MTP — Chinchilla-optimal on a single A100 80GB
+- **LLaMA-3-Lite** (515M) — From-scratch LLaMA-3 architecture; 78% peak-memory reduction via chunked CE + gradient checkpointing
+- **FusionLLM** (415.6M active / 868.6M stored) — MLA + Gated Delta Net + MoE + MTP in a 24-layer hybrid
+- **Stable Diffusion 1.x** (860M UNet) — Trained from scratch on 2× RTX 5090; best loss **0.0947** at epoch 16
+- **Vision Language Model** (PaliGemma-inspired) — Trained end-to-end on COCO 2014 captions, zero pre-trained weights
+- Plus FaceAgingCycleGAN · FaceGenerationVAE · DCGAN · TranslationLM · GPT-From-Scratch · ActionRecognition
 
 ## Stack
 
-Pure HTML5 + CSS3 — no frameworks, no bundler, no dependencies.
-Responsive · Dark navbar on scroll · Scroll-reveal animations · Mobile-friendly hamburger menu
+Pure HTML5 + CSS3 + vanilla JavaScript — no frameworks, no bundler, no dependencies.
+
+- Fully responsive (mobile / tablet / desktop)
+- Light & dark theme with `prefers-color-scheme` detection and a manual toggle
+- Accessible (skip link, ARIA labels, focus styles, `prefers-reduced-motion`)
+- SEO-friendly (Open Graph + Twitter Card meta, semantic HTML, descriptive `alt`s)
+- Interactive project filter chips
+- Scroll-reveal animations
+- Inline SVG favicon
 
 ## Local Development
 
@@ -34,4 +44,4 @@ Any push to `main` automatically updates the live site.
 
 ---
 
-*Open to Machine Learning Engineer roles. Kolkata, India.*
+*Open to ML Research Engineer roles. Kolkata, India · Remote-friendly.*
