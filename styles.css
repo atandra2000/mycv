@@ -401,14 +401,15 @@ main { display: block; }
 }
 
 .btn-primary {
-  background: var(--bg-interactive);
-  color: var(--text-strong);
-  border: 1px solid var(--bg-interactive);
+  background: var(--bg-strong);
+  color: var(--text-inverted);
+  border: 1px solid var(--bg-strong);
+  box-shadow: 0 0 0 1px var(--bg-interactive);
 }
 
 .btn-primary:hover {
-  background: var(--bg-interactive-2);
-  border-color: var(--bg-interactive-2);
+  background: var(--bg-strong-hover);
+  border-color: var(--bg-strong-hover);
 }
 
 /* ══════════════════════════ TABS ═══════════════════════════════════ */
