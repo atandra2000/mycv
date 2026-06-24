@@ -2,8 +2,19 @@
 
 > Personal portfolio site — live at **[atandra2000.github.io/mycv](https://atandra2000.github.io/mycv)**
 
-A modern, responsive, single-page portfolio for a deep learning research engineer. Showcases twelve
-from-scratch ML projects across LLMs, latent diffusion, multimodal AI, and agentic research systems.
+A clean, monospace-first portfolio for a deep learning research engineer. Twelve from-scratch ML projects
+across LLMs, latent diffusion, multimodal AI, and agentic research systems.
+
+## Design
+
+Inspired by the [opencode.ai](https://opencode.ai) aesthetic:
+
+- **IBM Plex Mono everywhere** — body, headings, nav, buttons, tags, code
+- **Mono-hue palette** — warm off-whites / near-blacks with one yellow accent for selection
+- **Hairline border dividers** between sections (no underlines under headings)
+- **No shadows, no gradients** — flat surface with hairline borders
+- **Section title** is just bold mono text + softer subtitle — no underline
+- **Tag chips** as small mono labels with hairline borders
 
 ## Highlights
 
@@ -19,13 +30,12 @@ from-scratch ML projects across LLMs, latent diffusion, multimodal AI, and agent
 
 Pure HTML5 + CSS3 + vanilla JavaScript — no frameworks, no bundler, no dependencies.
 
-- Fully responsive (mobile / tablet / desktop)
+- IBM Plex Mono (300, 400, 450, 500, 600, 700) via Google Fonts
 - Light & dark theme with `prefers-color-scheme` detection and a manual toggle
-- Accessible (skip link, ARIA labels, focus styles, `prefers-reduced-motion`)
-- SEO-friendly (Open Graph + Twitter Card meta, semantic HTML, descriptive `alt`s)
+- Fully responsive (mobile / tablet / desktop)
+- Accessible (ARIA labels, focus styles, `prefers-reduced-motion`)
 - Interactive project filter chips
-- Scroll-reveal animations
-- Inline SVG favicon
+- Tabbed "at a glance" / "stack" / "contact" hero
 
 ## Local Development
 
