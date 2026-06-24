@@ -213,27 +213,6 @@ main { display: block; }
 :root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
 :root[data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
 
-.top-cta {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px 8px 16px;
-  background: var(--bg-strong);
-  color: var(--text-inverted);
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: background .15s ease;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.top-cta:hover {
-  background: var(--bg-strong-hover);
-  text-decoration: none;
-}
-
 .hamburger {
   display: none;
   flex-direction: column;
@@ -292,8 +271,6 @@ main { display: block; }
     font-size: 14px;
     font-weight: 500;
   }
-
-  .top-cta { display: none !important; }
 }
 
 /* ══════════════════════════ HERO ════════════════════════════════════ */
