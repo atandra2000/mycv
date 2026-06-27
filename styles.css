@@ -65,7 +65,10 @@
 html {
   font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 16px;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
   background: var(--bg);
@@ -76,7 +79,8 @@ body {
   font-family: inherit;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.5;
+  line-height: 1.55;
+  text-justify: inter-word;
   transition: background-color .15s ease, color .15s ease;
 }
 
@@ -89,8 +93,13 @@ body {
 
 a {
   color: var(--text-strong);
-  text-underline-offset: 4px;
+  text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  text-decoration-color: var(--border);
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+a:hover {
+  text-decoration-color: var(--text-strong);
 }
 
 main { display: block; }
@@ -323,24 +332,24 @@ main { display: block; }
 }
 
 [data-component="hero"] h1 {
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 700;
   color: var(--text-strong);
-  letter-spacing: -.03em;
-  line-height: 1.15;
+  letter-spacing: -.035em;
+  line-height: 1.1;
   margin: 0;
 }
 
 @media (max-width: 60rem) {
-  [data-component="hero"] h1 { font-size: 22px; }
+  [data-component="hero"] h1 { font-size: 26px; letter-spacing: -.03em; }
 }
 
 .hero-role {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-strong);
-  letter-spacing: -.01em;
-  line-height: 1.4;
+  letter-spacing: -.012em;
+  line-height: 1.45;
   max-width: 82%;
   margin: 0;
 }
@@ -351,10 +360,15 @@ main { display: block; }
 
 [data-component="hero"] p {
   color: var(--text);
-  font-size: 14px;
-  line-height: 1.65;
-  max-width: 82%;
+  font-size: 14.5px;
+  line-height: 1.7;
+  max-width: 60ch;
   margin: 0;
+}
+
+[data-component="hero"] p strong {
+  font-weight: 600;
+  color: var(--text-strong);
 }
 
 @media (max-width: 50rem) {
@@ -443,11 +457,16 @@ main { display: block; }
   padding: 14px 0;
   color: var(--text-weak);
   font: 400 13px "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: -.002em;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color .15s ease, border-color .15s ease;
   white-space: nowrap;
+}
+
+[data-slot="tab"][data-active="true"] {
+  font-weight: 500;
 }
 
 [data-slot="tab"]:hover {
@@ -523,17 +542,20 @@ a.glance-stat:hover .glance-num {
 }
 
 .glance-num {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-strong);
-  line-height: 1.1;
-  letter-spacing: -.02em;
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "kern" 1;
 }
 
 .glance-label {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-weak);
-  letter-spacing: .01em;
+  letter-spacing: .015em;
+  line-height: 1.35;
 }
 
 /* ══════════════════════════ WHAT LIST ═════════════════════════════ */
@@ -541,13 +563,15 @@ a.glance-stat:hover .glance-num {
   list-style: none;
   display: flex;
   flex-direction: column;
+  max-width: 68ch;
 }
 
 .what-list li {
   display: flex;
-  gap: 16px;
-  line-height: 1.6;
-  padding: 14px 0;
+  gap: 18px;
+  align-items: baseline;
+  line-height: 1.68;
+  padding: 16px 0;
   border-bottom: 1px solid var(--border-weak);
 }
 
@@ -557,13 +581,15 @@ a.glance-stat:hover .glance-num {
   color: var(--icon);
   font-weight: 500;
   flex-shrink: 0;
-  width: 16px;
+  width: 18px;
+  text-align: center;
 }
 
 .what-list strong {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-strong);
-  margin-right: 12px;
+  margin-right: 10px;
+  letter-spacing: -.005em;
 }
 
 .connect-list li { padding: 14px 0; }
@@ -590,16 +616,18 @@ a.glance-stat:hover .glance-num {
 }
 
 [data-slot="section-title"] h2 {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--text-strong);
-  letter-spacing: -.01em;
+  letter-spacing: -.015em;
+  line-height: 1.2;
 }
 
 [data-slot="section-title"] span {
   color: var(--icon);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 13.5px;
+  line-height: 1.55;
+  letter-spacing: -.002em;
 }
 
 [data-slot="section-title"] p {
@@ -614,21 +642,22 @@ a.glance-stat:hover .glance-num {
 
 /* ══════════════════════════ ABOUT ═════════════════════════════════ */
 .about-body {
-  max-width: 100%;
+  max-width: 68ch;
 }
 
 .about-body p {
   color: var(--text);
-  margin-bottom: 14px;
-  font-size: 14px;
-  line-height: 1.65;
+  margin-bottom: 16px;
+  font-size: 14.5px;
+  line-height: 1.72;
 }
 
 .about-body p:last-child { margin-bottom: 0; }
 
 .about-body strong {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-strong);
+  letter-spacing: -.005em;
 }
 
 .about-body a {
@@ -680,11 +709,11 @@ a.glance-stat:hover .glance-num {
 }
 
 .skill-group-title {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--text-weak);
   text-transform: lowercase;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
   margin-bottom: 10px;
 }
 
@@ -701,10 +730,11 @@ a.glance-stat:hover .glance-num {
   color: var(--text);
   border: 1px solid var(--border-weak);
   border-radius: 3px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 400;
+  letter-spacing: -.002em;
   white-space: nowrap;
-  transition: border-color .15s ease, color .15s ease;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
 }
 
 .tag:hover {
@@ -786,10 +816,11 @@ a.glance-stat:hover .glance-num {
 .project-icon { font-size: 15px; flex-shrink: 0; line-height: 1; }
 
 .project-title {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--text-strong);
-  letter-spacing: -.01em;
+  letter-spacing: -.012em;
+  line-height: 1.3;
   flex: 1;
   min-width: 0;
 }
@@ -806,22 +837,30 @@ a.glance-stat:hover .glance-num {
 }
 
 .project-kind {
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 10.5px;
+  font-weight: 600;
   text-transform: lowercase;
   color: var(--text-weak);
   padding: 2px 8px;
   background: var(--bg);
   border: 1px solid var(--border-weak);
   border-radius: 3px;
-  letter-spacing: .02em;
+  letter-spacing: .05em;
   white-space: nowrap;
 }
 
 .project-desc {
   color: var(--text);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.68;
+  max-width: 72ch;
+  letter-spacing: -.002em;
+}
+
+.project-desc strong {
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: -.005em;
 }
 
 .project-meta {
@@ -832,7 +871,7 @@ a.glance-stat:hover .glance-num {
 
 .project-meta code {
   font-family: inherit;
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--text-weak);
   padding: 2px 8px;
   background: var(--bg);
@@ -840,6 +879,7 @@ a.glance-stat:hover .glance-num {
   border-radius: 3px;
   max-width: 100%;
   overflow-wrap: anywhere;
+  letter-spacing: -.002em;
 }
 
 @media (max-width: 40rem) {
@@ -871,26 +911,30 @@ a.glance-stat:hover .glance-num {
 }
 
 .writing-item.writing-featured .writing-title {
-  font-size: 17px;
+  font-size: 18px;
+  letter-spacing: -.018em;
 }
 
 .writing-item.writing-featured p {
-  font-size: 14px;
+  font-size: 14.5px;
+  line-height: 1.7;
 }
 
 .writing-kind {
   display: inline-block;
-  font-size: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
   color: var(--text-weak);
   text-transform: lowercase;
-  letter-spacing: .02em;
+  letter-spacing: .06em;
 }
 
 .writing-title {
-  font-size: 15px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--text-strong);
-  letter-spacing: -.01em;
+  letter-spacing: -.014em;
+  line-height: 1.3;
 }
 
 .writing-title a {
@@ -906,8 +950,15 @@ a.glance-stat:hover .glance-num {
 
 .writing-item p {
   color: var(--text);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.68;
+  max-width: 68ch;
+  letter-spacing: -.002em;
+}
+
+.writing-item p strong {
+  font-weight: 600;
+  color: var(--text-strong);
 }
 
 .writing-item p a {
@@ -937,19 +988,23 @@ a.glance-stat:hover .glance-num {
 }
 
 .edu-degree {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-strong);
-  letter-spacing: -.01em;
+  letter-spacing: -.014em;
+  line-height: 1.3;
 }
 
 .edu-period {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--text-weak);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: .01em;
 }
 
 .edu-school {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text-weak);
 }
 
@@ -957,12 +1012,19 @@ a.glance-stat:hover .glance-num {
   color: var(--text-strong);
   text-decoration: underline;
   text-underline-offset: 4px;
+  text-decoration-color: var(--border);
+}
+
+.edu-school a:hover {
+  text-decoration-color: var(--text-strong);
 }
 
 .edu-note {
   color: var(--text);
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: 13.5px;
+  line-height: 1.72;
+  max-width: 70ch;
+  letter-spacing: -.002em;
 }
 
 .edu-note em {
@@ -987,8 +1049,9 @@ a.glance-stat:hover .glance-num {
   padding: 24px 16px;
   color: var(--text-strong);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
+  letter-spacing: -.005em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1025,7 +1088,8 @@ a.glance-stat:hover .glance-num {
   padding: 18px var(--pad);
   border-top: 1px solid var(--border-weak);
   color: var(--text-weak);
-  font-size: 11px;
+  font-size: 11.5px;
+  letter-spacing: .005em;
 }
 
 [data-component="legal"] a {
