@@ -175,7 +175,7 @@ def build():
     if cur: lines.append(cur)
     for i, line in enumerate(lines):
         L.c.drawString(MARGIN_X, L.y - SZ_ROLE - i * SZ_ROLE * 1.35, line)
-    L.y -= SZ_ROLE + len(lines) * SZ_ROLE * 0.35 + 4
+    L.y -= SZ_ROLE + (len(lines) - 1) * SZ_ROLE * 1.35 + 6
 
     # Contact grid (2 cols x 2 rows)
     contacts = [
