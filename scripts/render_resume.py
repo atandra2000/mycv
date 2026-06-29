@@ -28,17 +28,19 @@ MARGIN_TOP     = 0.45 * inch
 MARGIN_BOTTOM  = 0.4 * inch
 USABLE_W       = PAGE_W - 2 * MARGIN_X         # 540 pt
 
-# Type scale (points)
-SZ_NAME     = 20
-SZ_ROLE     = 9.0
-SZ_CONTACT  = 8.0
-SZ_ANCHOR   = 15
-SZ_ANCH_LBL = 6.8
-SZ_H2       = 9.4
-SZ_BODY     = 8.2
-SZ_BULLET   = 8.2
-SZ_META     = 7.4
-SZ_TINY     = 7.0
+# Type scale (points) — bumped for better readability
+SZ_NAME     = 24
+SZ_ROLE     = 10.5
+SZ_CONTACT  = 9.0
+SZ_H2       = 11.0
+SZ_BODY     = 9.4
+SZ_BULLET   = 9.4
+SZ_META     = 8.4
+SZ_TINY     = 8.0
+
+# Character spacing (added to text after a font is set; reportlab accepts a
+# `charSpace` arg in `drawString` / `text` calls — we expose it via the Doc API)
+DEFAULT_CHARSPACE = 0.2
 
 # Colors
 INK         = '#111111'
@@ -48,10 +50,10 @@ INK_FAINT   = '#888888'
 INK_RULE    = '#cfcfcf'
 INK_ACCENT  = '#0a5cff'
 
-# Leading (line height) multipliers
-LEAD_BODY   = 1.32
-LEAD_BULLET = 1.30
-LEAD_META   = 1.25
+# Leading (line height) multipliers — slightly looser to match larger type
+LEAD_BODY   = 1.36
+LEAD_BULLET = 1.34
+LEAD_META   = 1.28
 
 
 # ── Renderer ─────────────────────────────────────────────────────────────────
@@ -65,23 +67,34 @@ class Doc:
         return self.y - self.bottom
 
     def need(self, h):
-        """If remaining space < h, fail (caller should call page_break)."""
-        return self.space_left() < h
+        """If remaining space < h, auto-page-break and return False."""
+        if self.space_left() < h:
+            self.page_break()
+            return False
+        return True
 
     def page_break(self):
         self.c.showPage()
         self.y = PAGE_H - MARGIN_TOP
 
-    def text(self, s, font='Sans', size=SZ_BODY, color=INK, x=None, dy=0):
-        """Draw at current y, advance y by size*1.0 (default)."""
+    def ensure(self, h):
+        """Auto-break if there isn't room for h more points."""
+        if self.space_left() < h:
+            self.page_break()
+
+    def text(self, s, font='Sans', size=SZ_BODY, color=INK, x=None, dy=0,
+             charSpace=DEFAULT_CHARSPACE):
+        """Draw at current y, advance y by size."""
         x = MARGIN_X if x is None else x
         self.c.setFont(font, size)
         self.c.setFillColor(color)
-        self.c.drawString(x, self.y - size, s)
+        self.c.drawString(x, self.y - size, s, charSpace=charSpace)
         self.y -= size + dy
 
-    def measure(self, s, font, size):
-        return pdfmetrics.stringWidth(s, font, size)
+    def measure(self, s, font, size, charSpace=DEFAULT_CHARSPACE):
+        # stringWidth doesn't natively add charSpace; reportlab's drawString adds
+        # it as an extra per-character offset, so we approximate by including it.
+        return pdfmetrics.stringWidth(s, font, size) + charSpace * max(0, len(s) - 1)
 
     def wrap(self, s, font, size, max_w):
         words, lines, cur = s.split(), [], ''
@@ -99,27 +112,21 @@ class Doc:
         """Word-wrap and draw a paragraph. y advances by full block height."""
         if max_w is None: max_w = USABLE_W - indent_first
         lines = self.wrap(s, font, size, max_w)
+        block_h = size * leading * len(lines)
+        self.ensure(block_h + 2)
         self.c.setFont(font, size)
         self.c.setFillColor(color)
         x0 = MARGIN_X + indent_first
         for i, line in enumerate(lines):
             self.c.drawString(x0, self.y - size - i * size * leading, line)
-        self.y -= size * leading * len(lines)
+        self.y -= block_h
 
     def bullet(self, label_bold, rest, font='Sans', size=SZ_BULLET,
                color=INK_SOFT, leading=LEAD_BULLET, label_color=INK):
         """Render a '• LABEL: rest' style bullet. label_bold drawn bold."""
         x = MARGIN_X + 8
-        # Bullet glyph
-        self.c.setFont('SansBold', size)
-        self.c.setFillColor(label_color)
-        self.c.drawString(MARGIN_X, self.y - size, '•')
-        # Bold lead-in
-        self.c.setFont('SansBold', size)
-        self.c.setFillColor(INK)
-        self.c.drawString(x, self.y - size, label_bold)
+        # Pre-compute wrapped lines for height estimation
         lw = self.measure(label_bold + ' ', 'SansBold', size)
-        # Remaining text wraps to the right of the label, then full-width below
         avail = USABLE_W - 8 - lw
         words, lines, cur = rest.split(), [], ''
         first = True
@@ -128,17 +135,29 @@ class Doc:
             if self.measure(trial, 'Sans', size) <= (avail if first else USABLE_W - 8) or not cur:
                 cur = trial
             else:
-                lines.append((avail if first else USABLE_W - 8, cur))
+                lines.append(cur)
                 first = False
                 cur = w
-        if cur: lines.append((avail if first else USABLE_W - 8, cur))
-
+        if cur: lines.append(cur)
+        block_h = size * leading * len(lines)
+        self.ensure(block_h + 4)
+        # Bullet glyph
+        self.c.setFont('SansBold', size)
+        self.c.setFillColor(label_color)
+        self.c.drawString(MARGIN_X, self.y - size, '•')
+        # Bold lead-in
+        self.c.setFont('SansBold', size)
+        self.c.setFillColor(INK)
+        self.c.drawString(x, self.y - size, label_bold)
+        # Wrapped rest
         self.c.setFont('Sans', size)
         self.c.setFillColor(color)
-        for i, (w_avail, line) in enumerate(lines):
+        first = True
+        for i, line in enumerate(lines):
             x_l = (MARGIN_X + 8 + lw) if i == 0 else (MARGIN_X + 8)
             self.c.drawString(x_l, self.y - size - i * size * leading, line)
-        self.y -= size * leading * len(lines)
+            first = False
+        self.y -= block_h
 
     def tags(self, items, col_w, font='Mono', size=SZ_TINY, color=INK_MID):
         """Render a flat comma-separated tag line (wraps if needed)."""
@@ -152,6 +171,9 @@ class Doc:
 
     def h2(self, label, sub=None):
         """Section heading: small caps + horizontal rule underneath."""
+        # Reserve space — push to next page if fewer than 30pt remain
+        if self.space_left() < 30:
+            self.page_break()
         self.y -= 4
         self.c.setFont('SansBold', SZ_H2)
         self.c.setFillColor(INK)
@@ -211,38 +233,6 @@ def draw_header(d):
 
 
 # ── Anchor metric strip ──────────────────────────────────────────────────────
-def draw_anchors(d):
-    nums   = ['14',      '78%',     '0.0947', '878']
-    labels = [['From-scratch', 'PyTorch projects'],
-              ['Peak memory cut', '(LLaMA-3 pretraining)'],
-              ['SD 1.x best loss', '(epoch 16, from scratch)'],
-              ['Passing tests', '(agentic platform)']]
-    cell_w = USABLE_W / 4
-    cell_h = 44
-    top    = d.y
-    bot    = top - cell_h
-    for i in range(4):
-        x = MARGIN_X + i * cell_w
-        d.c.setStrokeColor(INK_RULE)
-        d.c.setLineWidth(0.4)
-        d.c.rect(x, bot, cell_w, cell_h)
-        if i > 0:
-            d.c.line(x, bot + 4, x, top - 4)
-        # number — bottom-aligned in the cell
-        d.c.setFont('SansBold', SZ_ANCHOR)
-        d.c.setFillColor(INK)
-        nw = d.measure(nums[i], 'SansBold', SZ_ANCHOR)
-        d.c.drawString(x + (cell_w - nw) / 2, bot + 6, nums[i])
-        # two-line label — top-aligned in the cell
-        d.c.setFont('Sans', SZ_ANCH_LBL)
-        d.c.setFillColor(INK_MID)
-        for li, ll in enumerate(labels[i]):
-            lw = d.measure(ll, 'Sans', SZ_ANCH_LBL)
-            y = top - SZ_ANCH_LBL - 4 - li * (SZ_ANCH_LBL + 1.5)
-            d.c.drawString(x + (cell_w - lw) / 2, y, ll)
-    d.y = bot - 6
-
-
 # ── Sections ─────────────────────────────────────────────────────────────────
 def draw_summary(d):
     d.h2('Summary')
@@ -310,83 +300,101 @@ def draw_experience(d):
 
     d.bullet(
         '14 from-scratch PyTorch systems',
-        'across LLMs, latent diffusion, multimodal, generative vision, video understanding, and '
-        'agentic ML — no HF Trainer, no Lightning, every layer written by hand.',
+        'across LLMs, latent diffusion, multimodal AI, generative vision, video '
+        'understanding, and agentic ML — no HF Trainer, no Lightning, every layer '
+        'written by hand.',
     )
     d.bullet(
         'Memory engineering flagship: LLaMA-3-Lite',
-        '515M-param LLaMA-3-style transformer cut peak training memory 92 GB → 20 GB (78%) on a '
-        'single A100 80GB by stacking gradient checkpointing, chunked cross-entropy '
-        '(logits 50 GB → 0.3 GB), disk-backed token caching (RAM 112 GB → 1 MB), BF16, FA2, '
-        'channels_last, and fused AdamW.',
+        '515M-param LLaMA-3-style transformer cut peak training memory 92 GB → 20 GB '
+        '(78%) on a single A100 80GB via gradient checkpointing, chunked cross-entropy '
+        '(logits 50 GB → 0.3 GB), disk-backed token caching (RAM 112 GB → 1 MB), BF16, '
+        'FA2, channels_last, and fused AdamW.',
     )
     d.bullet(
         'Frontier reproductions',
-        'faithful DeepSeek-V3 (MLA + AuxLossFreeGate MoE + MTP, with the absorption trick), '
-        'GPT-OSS (sliding-window/full attention alternation + learned sinks + YaRN 128K, 2× '
-        'KV-cache cut at 128K), and Mamba-3 (complex64 SSD with 50% smaller state, MIMO head '
-        'mixing, zero causal conv) — each with a long-form technical write-up.',
+        'faithful DeepSeek-V3 (MLA + AuxLossFreeGate MoE + MTP, with the absorption '
+        'trick), GPT-OSS (sliding/full attention alt + learned sinks + YaRN 128K, 2× '
+        'KV-cache cut at 128K), and Mamba-3 (complex64 SSD with 50% smaller state, MIMO '
+        'head mixing, zero causal conv).',
     )
     d.bullet(
         'Diffusion flagship: Stable Diffusion 1.x',
-        '860M-param UNet trained from random init on 2× RTX 5090 across a 7-phase curriculum '
-        '(LAION-Aesthetic → DiffusionDB/JourneyDB → VGGFace2 → COCO → consolidation); best '
-        'loss 0.0947 at epoch 16; epoch-42 checkpoint released on HuggingFace.',
+        '860M-param UNet trained from random init on 2× RTX 5090 across a 7-phase '
+        'curriculum (LAION-Aesthetic → DiffusionDB/JourneyDB → VGGFace2 → COCO → '
+        'consolidation); best loss 0.0947 at epoch 16; epoch-42 checkpoint released '
+        'on HuggingFace.',
     )
     d.bullet(
         'Agentic flagship: Autonomous ML Research Engineer',
-        '15-phase multi-agent platform (23 agents, 61 tools, 186 models, 878 passing tests) that '
-        'turns an arXiv paper into evaluated experiments end-to-end with provider-agnostic '
-        'LLM routing and self-repair.',
+        '15-phase multi-agent platform (23 agents, 61 tools, 186 models, 878 tests) '
+        'that turns an arXiv paper into evaluated experiments end-to-end with '
+        'provider-agnostic LLM routing and self-repair.',
     )
     d.spacer(2)
 
 
 def draw_projects(d):
-    d.h2('Selected Projects', sub='6 flagship builds · 2022–2026')
+    d.h2('Selected Projects')
     projects = [
         ('Stable Diffusion 1.x — from random init on 2× RTX 5090',
          'StableDiffusion',
-         '860M-param UNet, 7-phase curriculum on 1.3M+ images, DDPM/DDIM, Min-SNR, EMA, '
-         'channels_last on Blackwell, DDP/NCCL. Best loss 0.0947 at epoch 16; epoch-42 '
-         'checkpoint released on HuggingFace.'),
-        ('LLaMA-3-Lite — 78% peak-memory cut on a single A100',
-         'LLaMA-3-Lite',
-         '515M params · GQA · RoPE θ=500K · SwiGLU · RMSNorm · FA2 · chunked CE · '
-         '8.25B-token run designed.'),
+         '860M-param UNet across a 7-phase curriculum on 1.3M+ images (LAION-Aesthetic → '
+         'DiffusionDB/JourneyDB → VGGFace2 → COCO → consolidation). DDPM/DDIM, Min-SNR, '
+         'EMA, channels_last on Blackwell, DDP/NCCL. Best loss 0.0947 at epoch 16; '
+         'epoch-42 checkpoint released on HuggingFace.'),
+        ('Autonomous ML Research Engineer — 15-phase multi-agent platform',
+         'AutonomousResearcher',
+         'Paper-to-experiment end-to-end: paper analysis, repo analysis, experiment '
+         'planning, code patches, training runs, statistical evaluation, autonomous '
+         'looping, research reports. 23 agents, 61 tools, 186 models, 878 tests. '
+         'Provider-agnostic LLM layer with self-repair.'),
         ('DeepSeek-v3-Lite — faithful V3 reproduction',
          'DeepSeek-v3-Lite',
-         '422M params · MLA + AuxLossFreeGate MoE + MTP · absorption-trick inference · '
-         'MTP-as-draft speculative decoding. Companion 643-line MLA deep-dive.'),
-        ('GPT-OSS-Lite — long-context MoE with sliding/full attention alternation',
-         'GPT-OSS-Lite',
-         '502M / 247M active · SWA(128)/full alt · learned sink bias (clamped to '
-         '[−10, 15] for BF16 SDPA) · YaRN 128K · top-2-of-8 MoE · 2× KV-cache cut at 128K · '
-         '130 tests.'),
-        ('Mamba-3-Lite — complex64 SSD, zero causal conv, pure PyTorch',
-         'Mamba-3-Lite',
-         '404M params · complex64 state (N=64) · MIMO head mixing · no mamba-ssm · no '
-         'custom CUDA. Companion SSD.md derives the chunkwise algorithm.'),
+         '422M params · MLA with absorption-trick inference · AuxLossFreeGate MoE · '
+         'Multi-Token Prediction · MTP-as-draft speculative decoding. Companion '
+         '643-line MLA deep-dive.'),
         ('FusionLLM — hybrid MLA + Gated Delta Net + MoE + MTP',
          'FusionLLM',
-         '415.6M active / 868.6M stored · NorMuon + CautiousAdamW · WSD + μP · '
-         '8.31B-token recipe.'),
+         '415.6M active / 868.6M stored params, 24 layers, single A100 80GB. '
+         'Dual-optimizer (NorMuon + CautiousAdamW), WSD + μP scheduler, 8.31B-token '
+         'Chinchilla recipe.'),
+        ('Face Aging CycleGAN — per-layer AdaIN conditioning',
+         'FaceAgingCycleGAN',
+         '256×256 IMDB-WIKI, 31/50 epochs on RTX 6000 Ada. Bidirectional young ↔ old '
+         'with AdaIN style normalization, 3-scale PatchGAN discriminator, LSGAN + '
+         'VGG-19 perceptual + L1 identity losses.'),
+        ('Vision-Language Model — PaliGemma-inspired, zero pretrained weights',
+         'VisionLanguageModel',
+         '140M params · SigLIP ViT encoder + linear projector + Gemma-style GQA decoder '
+         'with RoPE & GeGLU. Image patches injected at [IMG] tokens; trained end-to-end '
+         'on COCO 2014 on a single P100.'),
     ]
     for title, repo, desc in projects:
+        d.ensure((SZ_BODY + 0.4) * 1.15 * 2 + SZ_BODY * 4)  # room for title + desc
         # Project title row (title left, repo path right)
         d.c.setFont('SansBold', SZ_BODY + 0.4)
         d.c.setFillColor(INK)
-        d.c.drawString(MARGIN_X, d.y - SZ_BODY - 0.4, title)
         d.c.setFont('Mono', SZ_META)
         d.c.setFillColor(INK_ACCENT)
         repo_url = f'github.com/atandra2000/{repo}'
         rw = d.measure(repo_url, 'Mono', SZ_META)
+        title_max_w = USABLE_W - rw - 12
+        # Wrap title if needed
+        title_lines = d.wrap(title, 'SansBold', SZ_BODY + 0.4, title_max_w)
+        d.c.setFont('SansBold', SZ_BODY + 0.4)
+        d.c.setFillColor(INK)
+        for i, line in enumerate(title_lines):
+            d.c.drawString(MARGIN_X, d.y - SZ_BODY - 0.4 - i * (SZ_BODY + 0.4) * 1.15, line)
+        # Repo URL on first line, vertically centered to title block
+        d.c.setFont('Mono', SZ_META)
+        d.c.setFillColor(INK_ACCENT)
         d.c.drawString(PAGE_W - MARGIN_X - rw, d.y - SZ_BODY - 0.4, repo_url)
-        d.y -= SZ_BODY + 3
+        d.y -= (SZ_BODY + 0.4) * 1.15 * len(title_lines) + 3
         # Description — indented
         d.para(desc, font='Sans', size=SZ_BODY - 0.4,
                color=INK_SOFT, leading=LEAD_BODY, indent_first=10)
-        d.y -= 3
+        d.y -= 2
     d.spacer(0)
 
 
@@ -424,10 +432,16 @@ def build():
     c.setSubject('Résumé')
     c.setCreator('Atandra Bharati · Resume PDF Generator')
 
+    # Wrap drawString so every text gets a small charSpace by default
+    # (already-tight typography reads better with a touch of tracking).
+    _orig_drawString = c.drawString
+    _cs = DEFAULT_CHARSPACE
+    def _drawString(x, y, s, charSpace=_cs):
+        _orig_drawString(x, y, s, charSpace=charSpace)
+    c.drawString = _drawString
+
     d = Doc(c)
     draw_header(d)
-    draw_anchors(d)
-    d.spacer(4)
     draw_summary(d)
     draw_skills(d)
     draw_experience(d)
