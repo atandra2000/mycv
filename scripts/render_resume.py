@@ -159,8 +159,8 @@ def build():
     L.y -= SZ_NAME + 4
 
     # Role line
-    role = ('Deep Learning Research Engineer   ·   12 from-scratch PyTorch projects across LLMs, '
-            'latent diffusion, multimodal, and agentic ML systems.')
+    role = ('Deep Learning Research Engineer   ·   14 from-scratch PyTorch projects across LLMs, '
+            'latent diffusion, multimodal, agentic ML, long-context attention, and state-space models.')
     L.c.setFont('Menlo', SZ_ROLE)
     L.c.setFillColor(INK_SOFT)
     # Wrap to 2 lines
@@ -198,7 +198,7 @@ def build():
     cell_w = USABLE_W / 4
     cell_h = 30
     strip_y = L.y - cell_h
-    nums   = ['12', '78%', '0.0947', '878']
+    nums   = ['14', '78%', '0.0947', '878']
     labels = [
         'From-scratch PyTorch projects',
         'Peak-memory cut — LLaMA-3 pretraining',
@@ -234,16 +234,18 @@ def build():
     # Summary
     L.h2('Summary')
     L.para(
-        'Self-taught deep learning research engineer with 12 from-scratch PyTorch projects '
-        'spanning LLMs, latent diffusion, multimodal AI, and an agentic research platform. '
-        'Focused on GPU memory engineering, single-GPU feasibility, paper-faithful '
-        'reproduction, and agentic orchestration of ML research.',
+        'Self-taught deep learning research engineer with 14 from-scratch PyTorch projects '
+        'spanning LLMs, latent diffusion, multimodal AI, agentic research, long-context '
+        'attention, and state-space models. Focused on GPU memory engineering, single-GPU '
+        'feasibility, paper-faithful reproduction, and agentic orchestration of ML research.',
         size=SZ_BODY, leading_mult=1.34,
     )
     L.para(
         'Headline results: a 78% peak-memory cut on LLaMA-3 pretraining (92 GB → 20 GB); '
         'a 0.0947 training loss on Stable Diffusion 1.x trained from scratch (860M UNet, '
-        '2× RTX 5090); and a 15-phase multi-agent ML research platform with 878 passing tests.',
+        '2× RTX 5090); a 2× KV-cache reduction at 128K context in GPT-OSS-Lite via '
+        'sliding-window/full-attention alternation; and a 15-phase multi-agent ML research '
+        'platform with 878 passing tests.',
         size=SZ_BODY, leading_mult=1.34,
     )
     L.spacer(3)
@@ -261,25 +263,26 @@ def build():
     L.c.drawString(MARGIN_X, L.y - 7.8, 'Self-directed   ·   Full-time   ·   github.com/atandra2000')
     L.y -= 9
     L.para(
-        'Designed, implemented, and trained 12 end-to-end production-grade deep learning systems '
-        'in raw PyTorch — no high-level wrappers, no pretrained shortcuts where the model itself '
-        'is the subject. Every project engineered to fit on a single A100 80GB, 2× RTX 5090, or '
-        'smaller via BF16, Flash-Attn 2, gradient checkpointing, torch.compile, and chunked '
-        'cross-entropy.',
+        'Designed, implemented, and trained 14 end-to-end production-grade deep learning '
+        'systems in raw PyTorch — no high-level wrappers, no pretrained shortcuts where the '
+        'model itself is the subject. Every project engineered to fit on a single A100 80GB, '
+        '2× RTX 5090, or smaller via BF16, Flash-Attn 2, gradient checkpointing, torch.compile, '
+        'and chunked cross-entropy.',
         size=SZ_BODY, leading_mult=1.32,
     )
     L.para(
-        'Coverage: LLM pretraining (DeepSeek-V3 reproduction, LLaMA-3, FusionLLM hybrid); '
-        'latent diffusion (Stable Diffusion 1.x from scratch on 1.3M+ images across 7 phases); '
-        'multimodal (PaliGemma-style VLM on COCO with zero pretrained weights); generative '
-        'vision (CycleGAN, β-VAE, DCGAN); video understanding (HRNet pose + ST-GCN); and an '
+        'Coverage: LLM pretraining (DeepSeek-V3 reproduction, LLaMA-3, FusionLLM hybrid, '
+        'GPT-OSS-Lite long-context MoE, Mamba-3 complex64 SSD); latent diffusion (Stable '
+        'Diffusion 1.x from scratch on 1.3M+ images across 7 phases); multimodal '
+        '(PaliGemma-style VLM on COCO with zero pretrained weights); generative vision '
+        '(CycleGAN, β-VAE, DCGAN); video understanding (HRNet pose + ST-GCN); and an '
         'agentic ML research platform.',
         size=SZ_BODY, leading_mult=1.32,
     )
     L.spacer(4)
 
     # Selected projects header
-    L.h2('Selected Projects', meta='Five flagship builds · 2022–2026')
+    L.h2('Selected Projects', meta='Six flagship builds · 2022–2026')
 
     # Project 1: SD
     L._proj(
@@ -289,8 +292,8 @@ def build():
         'releasing the 42-epoch checkpoint. 860M-param UNet across a 7-phase curriculum on '
         '1.3M+ images (LAION-Aesthetic → high-aesthetic LAION → DiffusionDB/JourneyDB → '
         'VGGFace2 → COCO → consolidation); best loss 0.0947 at epoch 16. Atomic .tmp → os.replace '
-        'checkpointing, 4-stage VAE-latent pre-encoding, Min-SNR loss, GPU-resident EMA (0.9999), '
-        'channels_last on Blackwell, DDP/NCCL with no_sync accumulation.',
+        'checkpointing, Min-SNR loss, GPU-resident EMA (0.9999), channels_last on Blackwell, '
+        'DDP/NCCL with no_sync accumulation.',
         metas=['860M UNet · 7 phases · 1.3M+ images',
                '2× RTX 5090 · 42 epochs · best loss 0.0947'],
     )
@@ -324,12 +327,11 @@ def build():
         'DeepSeek-V3-Lite — Faithful V3 Reproduction',
         'LLM · Frontier Architecture',
         'Faithful from-scratch reimplementation of DeepSeek-V3 at 422M params — MLA, aux-loss-free '
-        'MoE, MTP, end-to-end. MLA with KV low-rank compression (kv_lora_rank = 192), the '
-        'absorption trick, decoupled RoPE; DeepSeekMoE (20 routed top-4 + 2 shared) with '
-        'aux-loss-free biased-sigmoid balancing; MTP with true absorption at inference. 8.4B-token '
-        'Chinchilla recipe on a single A100 80GB via SDPA Flash-Attn 2, μP LR scaling, '
-        'torch.compile(max-autotune); speculative decoding up to 2× throughput via the MTP '
-        'draft head. Author of the 643-line MLA deep-dive.',
+        'MoE, MTP, end-to-end. MLA with KV low-rank compression, the absorption trick, decoupled '
+        'RoPE; DeepSeekMoE with aux-loss-free biased-sigmoid balancing; MTP with true absorption at '
+        'inference. 8.4B-token Chinchilla recipe on a single A100 80GB via SDPA Flash-Attn 2, μP '
+        'LR scaling, torch.compile(max-autotune); speculative decoding up to 2× throughput via the '
+        'MTP draft head. Author of the 643-line MLA deep-dive.',
         metas=['422M params · MLA · MoE · MTP',
                'A100 80GB · SDPA · torch.compile · μP · 8.4B-token recipe'],
         is_first_page=True,  # ensure fits
@@ -338,7 +340,36 @@ def build():
     # ── Page 2 ────────────────────────────────────────────────────────────────
     L.new_page()
 
-    # Project 5: FusionLLM (top of page 2)
+    # Project 5: GPT-OSS-Lite
+    L._proj(
+        'GPT-OSS-Lite — Long-Context MoE (2× KV-Cache Cut at 128K)',
+        'LLM · Long-Context Attention',
+        'From-scratch reimplementation of OpenAI’s GPT-OSS at 502M total / 247M active params. '
+        'Twelve layers alternate sliding-window (window=128) and full attention; per-head learned '
+        'attention-sink bias (clamped to [−10, 15] for BF16 SDPA stability); YaRN RoPE (θ=100K, '
+        'scale=32, target=128K); pruned RoPE on global layers; top-2-of-8 routed experts + 1 shared. '
+        'Verifies a 2× KV-cache reduction at 128K context (1.13 GB vs 2.25 GB pure GQA, BF16). '
+        '130 tests across 10 files. Companion ATTENTION_SINKS.md walks through the sink-bias trick.',
+        metas=['502M total / 247M active · SWA(128)/Full alt',
+               'Learned sinks · YaRN 128K · top-2-of-8 MoE · 130 tests'],
+        no_top_rule=True,
+    )
+
+    # Project 6: Mamba-3-Lite
+    L._proj(
+        'Mamba-3-Lite — Complex64 SSD with Zero Causal Conv',
+        'LLM · State-Space Model',
+        'From-scratch reproduction of Mamba-3 at 404M params, written in pure PyTorch — no '
+        'mamba-ssm, no causal_conv1d, no custom CUDA, no Triton. Promotes the SSD recurrence '
+        'into the complex plane (N=64, complex64) so one complex state captures both decay and '
+        'rotation, halving the state dimension of Mamba-2 at parity capacity. Adds a fully-connected '
+        'MIMO mixer across SSM heads and removes the causal-conv block. Companion SSD.md derives '
+        'the chunkwise algorithm.',
+        metas=['404M params · complex64 SSD (N=64) · MIMO head mixing',
+               'A100 80GB · pure PyTorch · zero causal conv'],
+    )
+
+    # Project 7: FusionLLM
     L._proj(
         'FusionLLM — Hybrid MLA + GDN + MoE + MTP',
         'LLM · Hybrid Architecture',
@@ -350,11 +381,10 @@ def build():
         'FP32-precise GDN recurrence. 6-stage resumable data pipeline, 55 unit tests.',
         metas=['415.6M active / 868.6M stored',
                'NorMuon + CautiousAdamW · WSD + μP · 8.31B-token recipe'],
-        no_top_rule=True,
     )
 
     # Additional projects header
-    L.h2('Additional Projects', meta='Seven more · each with verified repo and build log')
+    L.h2('Additional Projects', meta='Six more · each with verified repo and build log')
     addl = [
         ('Vision-Language Model (PaliGemma-inspired).',
          'SigLIP vision encoder + linear projector + Gemma-style GQA decoder · trained end-to-end on COCO 2014 captions with zero pre-trained weights · P100.'),
@@ -373,16 +403,16 @@ def build():
         L._addl_row(strong, rest)
 
     # Technical skills
-    L.h2('Technical Skills', meta='Built up across twelve from-scratch projects · every keyword has shipped code behind it')
+    L.h2('Technical Skills', meta='Built up across fourteen from-scratch projects · every keyword has shipped code behind it')
     skills = [
         ('LLM',
-         'LLaMA-3, DeepSeek-V2/V3, MLA, GQA, MQA, MoE, MTP, Gated Delta Net, Chinchilla scaling, μP, WSD, NorMuon, AdamW, speculative decoding.'),
+         'LLaMA-3, DeepSeek-V2/V3, GPT-OSS, Mamba-2/3, MLA, GQA, MQA, MoE, MTP, Gated Delta Net, complex64 SSD, sliding-window + full-attention alternation, learned attention sinks, YaRN, Chinchilla scaling, μP, WSD, NorMuon, CautiousAdamW, AdamW, speculative decoding.'),
         ('Generative Vision',
          'Stable Diffusion 1.x, latent diffusion, UNet, DDPM, DDIM, Min-SNR, classifier-free guidance, EMA, VAE, GAN, DCGAN, PatchGAN, β-VAE, CycleGAN, AdaIN, spectral normalization, VGG and LPIPS perceptual loss.'),
         ('Multimodal & Video',
          'ViT, SigLIP, PaliGemma-style fusion, HRNet pose estimation, ST-GCN, CTR-GCN, graph convolution, NTU RGB+D 120.'),
         ('Transformer Components',
-         'RoPE, GQA, SwiGLU, GeGLU, RMSNorm, multi-head attention, MLA, MQA, MTP, cross-attention.'),
+         'RoPE (incl. YaRN-scaled, pruned), GQA, SwiGLU, GeGLU, RMSNorm, multi-head attention, MLA, MQA, MTP, cross-attention.'),
         ('Training & Infra',
          'BF16, FP16, FP8, mixed precision, DDP, FSDP, NCCL, torch.compile, Flash-Attn 2, SDPA, gradient checkpointing, chunked cross-entropy, disk-backed token cache, atomic checkpointing, resumable pipelines.'),
         ('Agentic ML',
@@ -521,7 +551,10 @@ def _two_col(self):
     y1 -= 10
     body1 = ('643-line reference on KV-cache math, low-rank compression algebra, the '
              'absorption-trick derivation, and decoupled RoPE mechanics in DeepSeek-V2/V3. '
-             'Read on GitHub.')
+             'Companion pieces: ATTENTION_SINKS.md (600-line reference on the GPT-OSS sink '
+             'bias + sliding/full attention alternation) and SSD.md (chunkwise Mamba-3 SSD '
+             'derivation with naive-recurrence equivalence proof). All three live in the '
+             'GitHub repos. Read on GitHub.')
     self.c.setFont('Menlo', SZ_BODY); self.c.setFillColor(INK_SOFT)
     for line in wrap(body1, 'Menlo', SZ_BODY, col_w):
         self.c.drawString(MARGIN_X, y1 - SZ_BODY, line)
@@ -544,7 +577,9 @@ def _two_col(self):
     self.c.drawString(x2, y2 - 7.8, school)
     y2 -= 9
     body2 = ('Civil Engineering for the math, structures, and optimization; deep learning '
-             'self-taught in parallel, from raw PyTorch up to frontier architectures.')
+             'self-taught in parallel, from raw PyTorch up to 14 frontier architectures '
+             '(DeepSeek-V3, LLaMA-3, GPT-OSS, Mamba-3, Stable Diffusion 1.x, and the 15-phase '
+             'autonomous ML research platform).')
     self.c.setFont('Menlo', SZ_BODY); self.c.setFillColor(INK_SOFT)
     for line in wrap(body2, 'Menlo', SZ_BODY, col_w):
         self.c.drawString(x2, y2 - SZ_BODY, line)
