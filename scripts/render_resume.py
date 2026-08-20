@@ -238,8 +238,9 @@ def draw_summary(d):
     d.h2('Summary')
     d.para(
         'Self-taught deep learning research engineer (B.Tech Civil Engineering, 2024) with '
-        '14 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
+        '17 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
         'agentic research, long-context attention, and state-space models. Headline results: '
+        '434M-active / 1.13B-stored HyMo hybrid LLM (GDN × MLA, pre-trained on 30B tokens); '
         '78% peak-memory cut on LLaMA-3 pretraining (92 GB → 20 GB on a single A100 80GB); '
         '0.0947 training loss on Stable Diffusion 1.x from scratch (860M UNet, 2× RTX 5090); '
         '2× KV-cache reduction at 128K in a GPT-OSS-style long-context MoE; 15-phase '
@@ -299,7 +300,7 @@ def draw_experience(d):
     d.y -= SZ_BODY + 4
 
     d.bullet(
-        '14 from-scratch PyTorch systems',
+        '17 from-scratch PyTorch systems',
         'across LLMs, latent diffusion, multimodal AI, generative vision, video '
         'understanding, and agentic ML — no HF Trainer, no Lightning, every layer '
         'written by hand.',
@@ -310,6 +311,13 @@ def draw_experience(d):
         '(78%) on a single A100 80GB via gradient checkpointing, chunked cross-entropy '
         '(logits 50 GB → 0.3 GB), disk-backed token caching (RAM 112 GB → 1 MB), BF16, '
         'FA2, channels_last, and fused AdamW.',
+    )
+    d.bullet(
+        'Flagship hybrid LLM: HyMo',
+        '434M active / 1.13B stored params fusing Gated Delta Net (linear attention) '
+        'with Multi-Head Latent Attention in a 3:1 ratio, plus Asymmetric MoE and '
+        'Multi-Token Prediction. Pre-trained from scratch on 30B tokens with a '
+        'hand-written Triton GDN kernel and FSDP-2.',
     )
     d.bullet(
         'Frontier reproductions',
@@ -337,6 +345,12 @@ def draw_experience(d):
 def draw_projects(d):
     d.h2('Selected Projects')
     projects = [
+        ('HyMo — flagship hybrid LLM, pre-trained on 30B tokens',
+         'HyMo',
+         '434M active / 1.13B stored params. 3:1 GDN-to-MLA ratio (24 linear-attention '
+         'layers + 8 full-attention MLA anchors), Asymmetric MoE on MLA blocks only, '
+         'Multi-Token Prediction heads. Custom Triton GDN kernel (fused 1D selective '
+         'scan, chunk_size=64). FSDP-2 + NorMuon.'),
         ('Stable Diffusion 1.x — from random init on 2× RTX 5090',
          'StableDiffusion',
          '860M-param UNet across a 7-phase curriculum on 1.3M+ images (LAION-Aesthetic → '
@@ -354,11 +368,6 @@ def draw_projects(d):
          '422M params · MLA with absorption-trick inference · AuxLossFreeGate MoE · '
          'Multi-Token Prediction · MTP-as-draft speculative decoding. Companion '
          '643-line MLA deep-dive.'),
-        ('FusionLLM — hybrid MLA + Gated Delta Net + MoE + MTP',
-         'FusionLLM',
-         '415.6M active / 868.6M stored params, 24 layers, single A100 80GB. '
-         'Dual-optimizer (NorMuon + CautiousAdamW), WSD + μP scheduler, 8.31B-token '
-         'Chinchilla recipe.'),
         ('Face Aging CycleGAN — per-layer AdaIN conditioning',
          'FaceAgingCycleGAN',
          '256×256 IMDB-WIKI, 31/50 epochs on RTX 6000 Ada. Bidirectional young ↔ old '
