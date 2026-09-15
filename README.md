@@ -20,8 +20,8 @@ Inspired by the [opencode.ai](https://opencode.ai) aesthetic:
 
 - **HyMo** (434M active / 1.13B stored) — Flagship hybrid LLM: 3:1 Gated Delta Net / MLA, Asymmetric MoE, MTP, custom Triton GDN kernel, FSDP-2; pre-trained from scratch on 30B tokens
 - **Autonomous ML Research Engineer** — 15-phase multi-agent platform; paper → plan → patch → train → evaluate → iterate → report
-- **DeepSeek-v3-Lite** (422M) — Faithful from-scratch DeepSeek-V3 with MLA, aux-loss-free MoE, MTP — Chinchilla-optimal on a single A100 80GB
-- **GPT-OSS-Lite** (502M / 247M active) — Sliding-window/full attention alternation, learned attention-sink bias, YaRN 128K; **2× KV-cache cut at 128K**, 130 tests
+- **DeepSeek-v3-Lite** (~412M) — Faithful from-scratch DeepSeek-V3 with MLA, aux-loss-free MoE, MTP — Chinchilla-optimal on a single A100 80GB
+- **GPT-OSS-Lite** (502M / 247M active) — Sliding-window/full attention alternation, learned attention-sink bias, YaRN 128K; **2× KV-cache cut at 128K**, 203 tests
 - **Mamba-3-Lite** (404M) — Complex64 SSD (N=64), MIMO head mixing, zero causal conv — pure PyTorch, no custom CUDA
 - **LLaMA-3-Lite** (515M) — From-scratch LLaMA-3 architecture; 78% peak-memory reduction via chunked CE + gradient checkpointing
 - **Stable Diffusion 1.x** (860M UNet) — Trained from scratch on 2× RTX 5090; best loss **0.0947** at epoch 16; epoch-42 checkpoint on HuggingFace

@@ -238,13 +238,14 @@ def draw_summary(d):
     d.h2('Summary')
     d.para(
         'Self-taught deep learning research engineer (B.Tech Civil Engineering, 2024) with '
-        '17 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
+        '18 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
         'agentic research, long-context attention, and state-space models. Headline results: '
         '434M-active / 1.13B-stored HyMo hybrid LLM (GDN × MLA, pre-trained on 30B tokens); '
         '78% peak-memory cut on LLaMA-3 pretraining (92 GB → 20 GB on a single A100 80GB); '
         '0.0947 training loss on Stable Diffusion 1.x from scratch (860M UNet, 2× RTX 5090); '
         '2× KV-cache reduction at 128K in a GPT-OSS-style long-context MoE; 15-phase '
-        'multi-agent ML research platform with 878 passing tests.',
+        'multi-agent ML research platform (20 agents, 61 tools) that turns a paper into '
+        'evaluated experiments end-to-end.',
         size=SZ_BODY, leading=LEAD_BODY, color=INK_SOFT,
     )
     d.spacer(3)
@@ -264,7 +265,7 @@ def draw_skills(d):
         ('Core',          'Python 3.12 · PyTorch 2.x · torch.compile · SDPA · Flash-Attn 2 · '
                           'BF16 · chunked CE · gradient checkpointing · DDP · safetensors · '
                           'HuggingFace · Diffusers · W&B · Comet'),
-        ('Agentic & Infra', 'Multi-agent orchestration · provider-agnostic LLM routing · vector + '
+        ('Agentic & Infra', 'LangChain · LangGraph · Multi-agent orchestration · provider-agnostic LLM routing · vector + '
                           'graph memory · Pydantic v2 · pytest · Ruff · A100 80GB · RTX 5090 · '
                           'RTX 6000 Ada · RTX 3090 · P100 · 2× T4'),
     ]
@@ -300,7 +301,7 @@ def draw_experience(d):
     d.y -= SZ_BODY + 4
 
     d.bullet(
-        '17 from-scratch PyTorch systems',
+        '18 from-scratch PyTorch systems',
         'across LLMs, latent diffusion, multimodal AI, generative vision, video '
         'understanding, and agentic ML — no HF Trainer, no Lightning, every layer '
         'written by hand.',
@@ -335,8 +336,8 @@ def draw_experience(d):
     )
     d.bullet(
         'Agentic flagship: Autonomous ML Research Engineer',
-        '15-phase multi-agent platform (23 agents, 61 tools, 186 models, 878 tests) '
-        'that turns an arXiv paper into evaluated experiments end-to-end with '
+        '15-phase multi-agent platform (20 agents, 61 typed tools, 250+ pydantic '
+        'models) that turns an arXiv paper into evaluated experiments end-to-end with '
         'provider-agnostic LLM routing and self-repair.',
     )
     d.spacer(2)
@@ -361,21 +362,21 @@ def draw_projects(d):
          'AutonomousResearcher',
          'Paper-to-experiment end-to-end: paper analysis, repo analysis, experiment '
          'planning, code patches, training runs, statistical evaluation, autonomous '
-         'looping, research reports. 23 agents, 61 tools, 186 models, 878 tests. '
-         'Provider-agnostic LLM layer with self-repair.'),
+         'looping, research reports. 20 agents, 61 typed tools, 250+ pydantic '
+         'models. Provider-agnostic LLM layer with self-repair.'),
         ('DeepSeek-v3-Lite — faithful V3 reproduction',
          'DeepSeek-v3-Lite',
-         '422M params · MLA with absorption-trick inference · AuxLossFreeGate MoE · '
+         '~412M params · MLA with absorption-trick inference · AuxLossFreeGate MoE · '
          'Multi-Token Prediction · MTP-as-draft speculative decoding. Companion '
-         '643-line MLA deep-dive.'),
+         '1,950-line MLA deep-dive.'),
         ('Face Aging CycleGAN — per-layer AdaIN conditioning',
          'FaceAgingCycleGAN',
-         '256×256 IMDB-WIKI, 31/50 epochs on RTX 6000 Ada. Bidirectional young ↔ old '
+         '256×256 IMDB-WIKI on RTX 6000 Ada. Bidirectional young ↔ old '
          'with AdaIN style normalization, 3-scale PatchGAN discriminator, LSGAN + '
          'VGG-19 perceptual + L1 identity losses.'),
         ('Vision-Language Model — PaliGemma-inspired, zero pretrained weights',
          'VisionLanguageModel',
-         '140M params · SigLIP ViT encoder + linear projector + Gemma-style GQA decoder '
+         'SigLIP ViT encoder + linear projector + Gemma-style GQA decoder '
          'with RoPE & GeGLU. Image patches injected at [IMG] tokens; trained end-to-end '
          'on COCO 2014 on a single P100.'),
     ]
