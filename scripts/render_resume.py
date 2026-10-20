@@ -16,25 +16,25 @@ from reportlab.pdfbase.ttfonts import TTFont
 # ── Fonts ────────────────────────────────────────────────────────────────────
 # HelveticaNeue (macOS system font) avoids a cmap collision in Helvetica.ttc
 # when both regular and bold are registered in the same PDF.
-pdfmetrics.registerFont(TTFont('Sans',     '/System/Library/Fonts/HelveticaNeue.ttc', subfontIndex=0))
-pdfmetrics.registerFont(TTFont('SansBold', '/System/Library/Fonts/HelveticaNeue.ttc', subfontIndex=1))
+pdfmetrics.registerFont(TTFont('Sans',     '/System/Library/Fonts/Supplemental/Arial.ttf'))
+pdfmetrics.registerFont(TTFont('SansBold', '/System/Library/Fonts/Supplemental/Arial Bold.ttf'))
 pdfmetrics.registerFont(TTFont('Mono',     '/System/Library/Fonts/Menlo.ttc',         subfontIndex=0))
 pdfmetrics.registerFont(TTFont('MonoBold', '/System/Library/Fonts/Menlo.ttc',         subfontIndex=2))
 
 # ── Layout constants ─────────────────────────────────────────────────────────
 PAGE_W, PAGE_H = LETTER                        # 612 × 792 pt
 MARGIN_X       = 0.5 * inch                    # 36 pt
-MARGIN_TOP     = 0.45 * inch
-MARGIN_BOTTOM  = 0.4 * inch
+MARGIN_TOP     = 0.38 * inch
+MARGIN_BOTTOM  = 0.32 * inch
 USABLE_W       = PAGE_W - 2 * MARGIN_X         # 540 pt
 
 # Type scale (points) — bumped for better readability
 SZ_NAME     = 24
 SZ_ROLE     = 10.5
 SZ_CONTACT  = 9.0
-SZ_H2       = 11.0
-SZ_BODY     = 9.4
-SZ_BULLET   = 9.4
+SZ_H2       = 10.6
+SZ_BODY     = 8.9
+SZ_BULLET   = 8.9
 SZ_META     = 8.4
 SZ_TINY     = 8.0
 
@@ -51,8 +51,8 @@ INK_RULE    = '#cfcfcf'
 INK_ACCENT  = '#0a5cff'
 
 # Leading (line height) multipliers — slightly looser to match larger type
-LEAD_BODY   = 1.36
-LEAD_BULLET = 1.34
+LEAD_BODY   = 1.26
+LEAD_BULLET = 1.24
 LEAD_META   = 1.28
 
 
@@ -174,7 +174,7 @@ class Doc:
         # Reserve space — push to next page if fewer than 30pt remain
         if self.space_left() < 30:
             self.page_break()
-        self.y -= 4
+        self.y -= 2
         self.c.setFont('SansBold', SZ_H2)
         self.c.setFillColor(INK)
         self.c.drawString(MARGIN_X, self.y - SZ_H2, label.upper())
@@ -188,7 +188,7 @@ class Doc:
         self.c.setStrokeColor(INK_RULE)
         self.c.setLineWidth(0.4)
         self.c.line(MARGIN_X, self.y, PAGE_W - MARGIN_X, self.y)
-        self.y -= 4
+        self.y -= 2
 
     def spacer(self, h):
         self.y -= h
@@ -239,13 +239,10 @@ def draw_summary(d):
     d.para(
         'Self-taught deep learning research engineer (B.Tech Civil Engineering, 2024) with '
         '24 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
-        'agentic research, long-context attention, and state-space models. Headline results: '
-        '434M-active / 1.13B-stored HyMo hybrid LLM (GDN × MLA, pre-trained on 30B tokens); '
-        '78% peak-memory cut on LLaMA-3 pretraining (92 GB → 20 GB on a single A100 80GB); '
-        '0.0947 training loss on Stable Diffusion 1.x from scratch (860M UNet, 2× RTX 5090); '
-        '2× KV-cache reduction at 128K in a GPT-OSS-style long-context MoE; 15-phase '
-        'multi-agent ML research platform (20 agents, 61 tools) that turns a paper into '
-        'evaluated experiments end-to-end.',
+        'and agentic systems. Headline results: a 434M-active / 1.13B-stored HyMo hybrid '
+        'LLM pre-trained on 30B tokens; a 78% peak-memory cut on LLaMA-3 pretraining '
+        '(92 GB → 20 GB on one A100 80GB); 0.0947 loss on Stable Diffusion 1.x trained '
+        'from scratch; and a 15-phase multi-agent research platform (20 agents, 61 tools).',
         size=SZ_BODY, leading=LEAD_BODY, color=INK_SOFT,
     )
     d.spacer(3)
@@ -300,12 +297,6 @@ def draw_experience(d):
     d.c.drawString(PAGE_W - MARGIN_X - pw, d.y - SZ_BODY - 0.6, period)
     d.y -= SZ_BODY + 4
 
-    d.bullet(
-        '24 from-scratch PyTorch systems',
-        'across LLMs, latent diffusion, multimodal AI, generative vision, video '
-        'understanding, and agentic ML — no HF Trainer, no Lightning, every layer '
-        'written by hand.',
-    )
     d.bullet(
         'Memory engineering flagship: LLaMA-3-Lite',
         '515M-param LLaMA-3-style transformer cut peak training memory 92 GB → 20 GB '
@@ -369,16 +360,6 @@ def draw_projects(d):
          '~412M params · MLA with absorption-trick inference · AuxLossFreeGate MoE · '
          'Multi-Token Prediction · MTP-as-draft speculative decoding. Companion '
          '1,950-line MLA deep-dive.'),
-        ('Face Aging CycleGAN — per-layer AdaIN conditioning',
-         'FaceAgingCycleGAN',
-         '256×256 IMDB-WIKI on RTX 6000 Ada. Bidirectional young ↔ old '
-         'with AdaIN style normalization, 3-scale PatchGAN discriminator, LSGAN + '
-         'VGG-19 perceptual + L1 identity losses.'),
-        ('Vision-Language Model — PaliGemma-inspired, zero pretrained weights',
-         'VisionLanguageModel',
-         'SigLIP ViT encoder + linear projector + Gemma-style GQA decoder '
-         'with RoPE & GeGLU. Image patches injected at [IMG] tokens; trained end-to-end '
-         'on COCO 2014 on a single P100.'),
     ]
     for title, repo, desc in projects:
         d.ensure((SZ_BODY + 0.4) * 1.15 * 2 + SZ_BODY * 4)  # room for title + desc
@@ -426,9 +407,7 @@ def draw_education(d):
     d.y -= SZ_META + 3
 
     d.para(
-        'Civil Engineering for the math, structures, and optimization; deep learning self-taught '
-        'in parallel, from raw PyTorch up to frontier LLM, diffusion, multimodal, and '
-        'agentic architectures.',
+        'Civil Engineering for the math, structures and optimization; deep learning self-taught in parallel.',
         font='Sans', size=SZ_BODY - 0.4, color=INK_SOFT, leading=LEAD_BODY,
     )
 
