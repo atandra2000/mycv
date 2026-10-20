@@ -238,7 +238,7 @@ def draw_summary(d):
     d.h2('Summary')
     d.para(
         'Self-taught deep learning research engineer (B.Tech Civil Engineering, 2024) with '
-        '18 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
+        '24 from-scratch PyTorch projects spanning LLMs, latent diffusion, multimodal AI, '
         'agentic research, long-context attention, and state-space models. Headline results: '
         '434M-active / 1.13B-stored HyMo hybrid LLM (GDN × MLA, pre-trained on 30B tokens); '
         '78% peak-memory cut on LLaMA-3 pretraining (92 GB → 20 GB on a single A100 80GB); '
@@ -301,7 +301,7 @@ def draw_experience(d):
     d.y -= SZ_BODY + 4
 
     d.bullet(
-        '18 from-scratch PyTorch systems',
+        '24 from-scratch PyTorch systems',
         'across LLMs, latent diffusion, multimodal AI, generative vision, video '
         'understanding, and agentic ML — no HF Trainer, no Lightning, every layer '
         'written by hand.',
