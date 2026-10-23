@@ -287,7 +287,7 @@
           <ul class="what-list">
             <li><span class="what-icon" aria-hidden="true">→</span><span><strong>Shipping HyMo</strong> &mdash; the flagship hybrid LLM: 434M active / 1.13B stored, 3:1 GDN/MLA with Asymmetric MoE and MTP, custom Triton GDN kernel, FSDP-2, pre-trained from scratch on 30B tokens. <a href="https://github.com/atandra2000/HyMo" target="_blank" rel="noopener">View project &rarr;</a></span></li>
             <li><span class="what-icon" aria-hidden="true">→</span><span><strong>Shipping AutonomousResearcher</strong> &mdash; a 15-phase multi-agent platform that turns an arXiv paper into evaluated experiments: paper analysis, repo analysis, experiment planning, code patches, training runs, statistical evaluation, autonomous looping, and end-to-end research reports. <a href="https://github.com/atandra2000/AutonomousResearcher" target="_blank" rel="noopener">View project &rarr;</a></span></li>
-            <li><span class="what-icon" aria-hidden="true">→</span><span><strong>Just released two new LLM reproductions</strong> &mdash; <a href="https://github.com/atandra2000/GPT-OSS-Lite" target="_blank" rel="noopener">GPT-OSS-Lite</a> (502M / 247M active, sliding-window/full attention alternation, learned attention sinks, YaRN 128K, <strong>2&times; KV-cache reduction at 128K</strong>) and <a href="https://github.com/atandra2000/Mamba-3-Lite" target="_blank" rel="noopener">Mamba-3-Lite</a> (404M, complex64 SSD with 50% smaller state than Mamba-2, MIMO head mixing, zero causal convolution). Both are pure PyTorch &mdash; no custom CUDA, no HF Trainer.</span></li>
+            <li><span class="what-icon" aria-hidden="true">→</span><span><strong>Just released two new LLM reproductions</strong> &mdash; <a href="https://github.com/atandra2000/GPT-OSS-Lite" target="_blank" rel="noopener">GPT-OSS-Lite</a> (502M / 247M active, sliding-window/full attention alternation, learned attention sinks, YaRN 128K, <strong>2&times; KV-cache reduction at 128K</strong>) and <a href="https://github.com/atandra2000/Mamba-3-Lite" target="_blank" rel="noopener">Mamba-3-Lite</a> (~434M, complex64 SSD with 50% smaller state than Mamba-2, MIMO head mixing, zero causal convolution). Both are pure PyTorch &mdash; no custom CUDA, no HF Trainer.</span></li>
             <li><span class="what-icon" aria-hidden="true">→</span><span><strong>Open to conversations</strong> &mdash; looking for ML / GenAI / AI / CV engineer roles (remote-friendly). Particularly interested in teams building foundation-model infrastructure, agentic research systems, or post-training pipelines. <a href="#connect">Reach out &rarr;</a></span></li>
           </ul>
         </section>
@@ -296,7 +296,7 @@
         <section data-component="skills" id="skills">
           <div data-slot="section-title">
             <h2>Technical Stack</h2>
-            <span>The tools I reach for &mdash; built up across seventeen from-scratch projects.</span>
+            <span>The tools I reach for &mdash; built up across twenty-four from-scratch projects.</span>
           </div>
 
           <div class="skills-grid">
@@ -403,9 +403,9 @@
                 <h4 class="project-title"><a href="https://github.com/atandra2000/Mamba-3-Lite" target="_blank" rel="noopener">Mamba-3-Lite</a></h4>
                 <span class="project-kind">SSM</span>
               </div>
-              <p class="project-desc">From-scratch reproduction of Mamba-3 at 404M params, written in pure PyTorch (no <code>mamba-ssm</code>, no custom CUDA, no causal conv). Promotes the state-space recurrence into the complex plane (N=64 complex64) &mdash; half the state dimension of Mamba-2 at parity capacity. Adds a fully-connected MIMO mixer across SSM heads and drops the causal conv block. Targeted at a Chinchilla-optimal 8.0B-token run on a single A100 80GB (12&ndash;15 h). The companion <a href="https://github.com/atandra2000/Mamba-3-Lite/blob/main/SSD.md" target="_blank" rel="noopener">SSD.md</a> walks through the chunkwise algorithm and its equivalence to the naive O(T) recurrence.</p>
+              <p class="project-desc">From-scratch reproduction of Mamba-3 at ~434M params, written in pure PyTorch (no <code>mamba-ssm</code>, no custom CUDA, no causal conv). Promotes the state-space recurrence into the complex plane (N=64 complex64) &mdash; half the state dimension of Mamba-2 at parity capacity. Adds a fully-connected MIMO mixer across SSM heads and drops the causal conv block. Targeted at a Chinchilla-optimal 8.0B-token run on a single A100 80GB (12&ndash;15 h). The companion <a href="https://github.com/atandra2000/Mamba-3-Lite/blob/main/SSD.md" target="_blank" rel="noopener">SSD.md</a> walks through the chunkwise algorithm and its equivalence to the naive O(T) recurrence.</p>
               <div class="project-meta">
-                <code>404M params &middot; complex64 SSD (N=64) &middot; MIMO head mixing</code>
+                <code>~434M params &middot; complex64 SSD (N=64) &middot; MIMO head mixing</code>
                 <code>A100 80GB &middot; pure PyTorch &middot; zero causal conv</code>
               </div>
             </article>
